@@ -34,34 +34,33 @@ class _BottomBarPageState extends State<BottomBarPage> {
         color: secondaryColor,
         items: [
           Image(
-            image: Svg(
-              'assets/icons/home.svg',
-              color: currentIndex == 0 ? primaryTextColor : secondaryColor,
-              size: Size(20, 20),
+            image: AssetImage(
+              'assets/icons/home.png',
             ),
+            color: currentIndex == 0 ? primaryColor : primaryTextColor,
+            height: 20,
           ),
           Image(
-            image: Svg(
-              'assets/icons/search.svg',
-              color: primaryTextColor,
-              size: Size(20, 20),
+            image: AssetImage(
+              'assets/icons/search.png',
             ),
+            color: currentIndex == 1 ? primaryColor : primaryTextColor,
+            height: 20,
           ),
           Image(
-            image: Svg(
-              'assets/icons/download.svg',
-              color: primaryTextColor,
-              size: Size(20, 20),
+            image: AssetImage(
+              'assets/icons/download.png',
             ),
+            color: currentIndex == 2 ? primaryColor : primaryTextColor,
+            height: 20,
           ),
           Image(
-            image: Svg(
-              'assets/icons/profile.svg',
-              color: primaryTextColor,
-              size: Size(20, 20),
+            image: AssetImage(
+              'assets/icons/profile.png',
             ),
+            color: currentIndex == 3 ? primaryColor : primaryTextColor,
+            height: 20,
           ),
-  
         ],
         index: currentIndex,
         onTap: (index) {

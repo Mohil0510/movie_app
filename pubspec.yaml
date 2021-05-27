@@ -29,6 +29,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   flutter_svg_provider: ^0.1.9
   curved_navigation_bar: ^0.3.7
+  syncfusion_flutter_datagrid: 
 
 
 dev_dependencies:
