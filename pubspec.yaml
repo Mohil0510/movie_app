@@ -30,6 +30,12 @@ dependencies:
   flutter_svg_provider: ^0.1.9
   curved_navigation_bar: ^0.3.7
   syncfusion_flutter_datagrid: 
+  carousel_slider: ^3.0.0
+  shared_preferences: ^2.0.0
+  dio: ^4.0.0
+  device_info:
+  http: 
+  path:
 
 
 dev_dependencies:

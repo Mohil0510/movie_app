@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 //   static ThemeMode themeMode = ThemeMode.dark;
 // }
 
-const Color scaffoldBackgroundColor = Color(0Xff000000); //black
+const Color scaffoldBackgroundColor = Color(0Xff141414); //black
 const Color primaryColor = Color(0xffFF1900); //red
 const Color secondaryColor = Color(0xff212121); //dark grey
 const Color primaryTextColor = Color(0xffFFFFFF); //white
@@ -40,23 +40,24 @@ const Decoration greyContainerDecoration = BoxDecoration(
 );
 
 const TextStyle boldText1 = TextStyle(
-  color: Color(0xffFFFFFF),
+  color: primaryTextColor,
   fontSize: 13,
   fontWeight: FontWeight.bold,
 );
 
 const TextStyle boldText2 = TextStyle(
-  color: Color(0xffFFFFFF),
+  color: primaryTextColor,
   fontSize: 15,
   fontWeight: FontWeight.bold,
 );
 
+
 const TextStyle text1 = TextStyle(
-  color: Color(0XffA2A2A2),
+  color: secondaryTextColor,
   fontSize: 16,
 );
 
 const TextStyle text2 = TextStyle(
-  color: Color(0XffA2A2A2),
+  color: secondaryTextColor,
   fontSize: 15,
 );

@@ -1,7 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:movie_app/screen/downlode_page/downlode_page.dart';
 import 'package:movie_app/screen/home_page/home_page.dart';
 import 'package:movie_app/screen/profile_page/profile_page.dart';
