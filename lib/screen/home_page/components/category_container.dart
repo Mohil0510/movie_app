@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/model/movie_model.dart';
 import 'package:movie_app/theme_data.dart';
 
 class CategoryContainer extends StatefulWidget {
-  final MovieModel topwatched;
+  final String title;
+  final String poster;
 
-  const CategoryContainer({Key key, this.topwatched}) : super(key: key);
-
+  const CategoryContainer({
+    Key key,
+    this.title,
+    this.poster,
+  }) : super(key: key);
   @override
   _CategoryContainerState createState() => _CategoryContainerState();
 }
 
 class _CategoryContainerState extends State<CategoryContainer> {
-  // String name = '';
-  // String image = '';
-
-  @override
-  void initState() {
-    super.initState();
-    // movieApi();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,7 +32,9 @@ class _CategoryContainerState extends State<CategoryContainer> {
                   Radius.circular(8),
                 ),
                 image: DecorationImage(
-                  image: NetworkImage("${widget.topwatched.poster}"),
+                  image: NetworkImage("${widget.poster}"),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.bottomCenter,
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -55,7 +51,7 @@ class _CategoryContainerState extends State<CategoryContainer> {
                 vertical: 5,
               ),
               child: Text(
-                ("${widget.topwatched.title}"),
+                ("${widget.title}"),
                 overflow: TextOverflow.ellipsis,
                 style: boldText1,
               ),
@@ -65,26 +61,4 @@ class _CategoryContainerState extends State<CategoryContainer> {
       ),
     );
   }
-
-  // void movieApi() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   var response = await get(
-  //     Uri.parse(
-  //         "https://api.themoviedb.org/3/movie/157336/images?api_key=c1d96f3eee979c786d5d9ee64920943d"),
-  //     headers: {
-  //       "x-rapidapi-key": 'c1d96f3eee979c786d5d9ee64920943d',
-  //     },
-  //   );
-
-  //   print(response.statusCode);
-  //   if (response.statusCode == 200) {
-  //     // loader true
-  //     var decoded = jsonDecode(response.body);
-  //     print(decoded);
-  //     setState(() {
-  //       name = '${decoded["id"]}';
-  //       image = '${decoded["backdrops"]["file_path"]}';
-  //     });
-  //   }
-  // }
 }
