@@ -40,6 +40,14 @@ class _CategoryContainerState extends State<CategoryContainer> {
                 image: DecorationImage(
                   image: NetworkImage("${widget.topwatched.poster}"),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black45,
+                    blurRadius: 5,
+                    spreadRadius: 2,
+                    offset: Offset(4, 4),
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -48,6 +56,7 @@ class _CategoryContainerState extends State<CategoryContainer> {
               ),
               child: Text(
                 ("${widget.topwatched.title}"),
+                overflow: TextOverflow.ellipsis,
                 style: boldText1,
               ),
             ),

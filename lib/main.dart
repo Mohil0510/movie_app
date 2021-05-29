@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/screen/bottom_bar/bottom_bar.dart';
+import 'package:movie_app/screen/login_page/login_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       // theme: GlobalData.themeData,
       // darkTheme: GlobalData.darkThemeData,
       // themeMode: GlobalData.themeMode,
-      home: BottomBarPage(),
+      home: LoginPage(),
     );
   }
 }

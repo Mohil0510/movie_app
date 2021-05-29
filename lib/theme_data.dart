@@ -18,6 +18,34 @@ import 'package:flutter/material.dart';
 //   );
 
 //   static ThemeMode themeMode = ThemeMode.dark;
+
+
+// class CustomTheme {
+//   static ThemeData get lightTheme {
+//     Color secondaryColor = Color(0xff212121);
+//     return ThemeData(
+//       //2
+//       primaryColor: primaryColor,
+
+//       scaffoldBackgroundColor: Color(0Xff141414),
+//       textTheme: TextTheme(
+        
+//       ),
+//     );
+//   }
+
+//   static ThemeData get darkTheme {
+//     return ThemeData(
+//         primaryColor: primaryColor,
+//         scaffoldBackgroundColor: Colors.black,
+//         fontFamily: 'Montserrat',
+//         textTheme: ThemeData.dark().textTheme,
+//         buttonTheme: ButtonThemeData(
+//           shape:
+//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+//           buttonColor: primaryColor,
+//         ));
+//   }
 // }
 
 const Color scaffoldBackgroundColor = Color(0Xff141414); //black

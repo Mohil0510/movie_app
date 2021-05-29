@@ -25,6 +25,26 @@ class _BottomBarPageState extends State<BottomBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        title: Image(
+          image: AssetImage('assets/logos/Logo2.png'),
+          height: 27,
+          color: primaryColor,
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              minRadius: 18,
+            ),
+          ),
+        ],
+        centerTitle: true,
+      ),
       body: currentPage[currentIndex],
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: scaffoldBackgroundColor,
@@ -67,6 +87,17 @@ class _BottomBarPageState extends State<BottomBarPage> {
             currentIndex = index;
           });
         },
+      ),
+      drawer: Container(
+        width: 270,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(60),
+            topRight: Radius.circular(60),
+          ),
+        ),
+        child: Drawer(),
       ),
     );
   }
