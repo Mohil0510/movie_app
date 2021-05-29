@@ -32,7 +32,6 @@ dependencies:
   syncfusion_flutter_datagrid: 
   carousel_slider: ^3.0.0
   shared_preferences: ^2.0.0
-  flutter_gifimage: ^1.0.1
   dio: ^4.0.0
   device_info:
   http: 
