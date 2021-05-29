@@ -7,11 +7,13 @@ class MovieModel {
   final String type;
   final String language;
   final String poster;
+  final String banner;
   final String plot;
   final String movie;
   final List cast;
 
-  MovieModel({
+  MovieModel( {
+    this.banner,
     this.id,
     this.title,
     this.year,
