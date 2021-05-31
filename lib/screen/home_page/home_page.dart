@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:movie_app/config.dart';
@@ -53,16 +54,22 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 child: Column(
                   children: [
-                    Container(
-                      height: 200,
-                      child: ListView.builder(
-                        itemBuilder: (context, index) => HomeSlider(
-                          poster: "${topwatchelist[index].banner}",
-                          score: topwatchelist[index].rating,
-                          title: "${topwatchelist[index].title}",
-                        ),
-                        itemCount: topwatchelist.length,
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: 200,
+                        autoPlay: true,
+                        viewportFraction: 1,
+                        enlargeCenterPage: false,
+                        autoPlayInterval: Duration(seconds: 5),
+                        enableInfiniteScroll: true,
                       ),
+                      items: topwatchelist.map((MovieModel movie) {
+                        return HomeSlider(
+                          poster: "${movie.banner}",
+                          score: movie.rating,
+                          title: "${movie.title}",
+                        );
+                      }).toList(),
                     ),
                     CommonWidget.category(categoryname: 'Top watched'),
                     isLoading
@@ -139,7 +146,7 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await get(
       Uri.parse(
-          '${AppConfig.baseUrl}/upcoming?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=1'),
+          '${AppConfig.baseUrl}/upcoming?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=2'),
     );
 
     // print(response.statusCode);
@@ -171,17 +178,17 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await get(
       Uri.parse(
-          '${AppConfig.baseUrl}/popular?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=2'),
+          '${AppConfig.baseUrl}/popular?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=3'),
     );
 
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       // loader true
       var decoded = jsonDecode(response.body);
       if (decoded["results"] is List) {
         decoded["results"].forEach((item) {
-          print(item["original_title"]);
-          print("${AppConfig.imageUrl}${item["poster_path"]}");
+          // print(item["original_title"]);
+          // print("${AppConfig.imageUrl}${item["poster_path"]}");
           if (morelikethislist.length < 10) {
             morelikethislist.add(MovieModel(
               id: item['id'],
