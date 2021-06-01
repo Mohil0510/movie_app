@@ -1,16 +1,13 @@
 import 'dart:convert';
-
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:flutter/material.dart';
 import 'package:movie_app/config.dart';
-import 'package:movie_app/model/movie_model.dart';
-import 'package:movie_app/screen/home_page/components/category_container.dart';
-import 'package:movie_app/screen/home_page/components/home_slider.dart';
-
 import 'package:movie_app/theme_data.dart';
+import 'package:movie_app/model/movie_model.dart';
 import 'package:movie_app/widget/common_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:movie_app/screen/home_page/components/home_slider.dart';
+import 'package:movie_app/screen/home_page/components/category_container.dart';
 
 class HomePage extends StatefulWidget {
   final MovieModel topwatched;
@@ -26,6 +23,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<MovieModel> topwatchelist = [];
   List<MovieModel> morelikethislist = [];
+  List<MovieModel> topratedlist = [];
+  List<MovieModel> nowplayinglist = [];
   bool isLoading = false;
 
   @override
@@ -33,6 +32,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     topWatche();
     morelikethis();
+    toprated();
+    nowplaying();
   }
 
   @override
@@ -59,81 +60,90 @@ class _HomePageState extends State<HomePage> {
                         height: 200,
                         autoPlay: true,
                         viewportFraction: 1,
-                        enlargeCenterPage: false,
-                        autoPlayInterval: Duration(seconds: 5),
-                        enableInfiniteScroll: true,
+                        enlargeCenterPage: true,
+                        autoPlayInterval: Duration(seconds: 8),
+                        enableInfiniteScroll: false,
                       ),
                       items: topwatchelist.map((MovieModel movie) {
                         return HomeSlider(
-                          poster: "${movie.banner}",
-                          score: movie.rating,
-                          title: "${movie.title}",
+                          sliders: movie,
                         );
                       }).toList(),
                     ),
-                    CommonWidget.category(categoryname: 'Top watched'),
-                    isLoading
-                        ? Container(
-                            height: 185,
-                            child: Center(
-                              child: Image.asset(
-                                "assets/video/loding.gif",
-                                height: 50,
-                                color: primaryColor,
+                    CommonWidget.category(
+                      categoryname: 'Now Playings',
+                    ),
+                    Container(
+                      height: 190,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              CategoryContainer(
+                                movieData: nowplayinglist[index],
                               ),
-                            ),
-                          )
-                        : Container(
-                            height: 190,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) =>
-                                  SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    CategoryContainer(
-                                      poster: "${topwatchelist[index].poster}",
-                                      title: "${topwatchelist[index].title}",
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              itemCount: topwatchelist.length,
-                            ),
+                            ],
                           ),
+                        ),
+                        itemCount: nowplayinglist.length,
+                      ),
+                    ),
                     CommonWidget.category(categoryname: 'More like this'),
-                    isLoading
-                        ? Container(
-                            height: 185,
-                            child: Center(
-                              child: Image.asset(
-                                "assets/video/loding.gif",
-                                height: 50,
-                                color: primaryColor,
+                    Container(
+                      height: 190,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              CategoryContainer(
+                                movieData: morelikethislist[index],
                               ),
-                            ),
-                          )
-                        : Container(
-                            height: 190,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) =>
-                                  SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    CategoryContainer(
-                                      poster:
-                                          "${morelikethislist[index].poster}",
-                                      title: "${morelikethislist[index].title}",
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              itemCount: morelikethislist.length,
-                            ),
+                            ],
                           ),
+                        ),
+                        itemCount: morelikethislist.length,
+                      ),
+                    ),
+                    CommonWidget.category(categoryname: 'Best all time'),
+                    Container(
+                      height: 190,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              CategoryContainer(
+                                movieData: topratedlist[index],
+                              ),
+                            ],
+                          ),
+                        ),
+                        itemCount: topratedlist.length,
+                      ),
+                    ),
+                    CommonWidget.category(categoryname: 'Top action'),
+                    Container(
+                      height: 190,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              CategoryContainer(
+                                movieData: topwatchelist[index],
+                              ),
+                            ],
+                          ),
+                        ),
+                        itemCount: topwatchelist.length,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -143,27 +153,24 @@ class _HomePageState extends State<HomePage> {
 
   void topWatche() async {
     setState(() => isLoading = true);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await get(
       Uri.parse(
-          '${AppConfig.baseUrl}/upcoming?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=2'),
+          '${AppConfig.baseUrl}/upcoming?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=1'),
     );
-
-    // print(response.statusCode);
     if (response.statusCode == 200) {
       // loader true
       var decoded = jsonDecode(response.body);
       if (decoded["results"] is List) {
         decoded["results"].forEach((item) {
-          // print(item["original_title"]);
-          // print("${AppConfig.imageUrl}${item["poster_path"]}");
           if (topwatchelist.length < 10) {
             topwatchelist.add(MovieModel(
               id: item['id'],
               title: '${item["original_title"]}',
               poster: "${AppConfig.imageUrl}${item["poster_path"]}",
               banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
-              rating: "${item["vote_average"]}",
+              score: "${item["vote_average"]}",
+              releaseDate: "${item["release_date"]}",
+              description: "${item["overview"]}",
             ));
           }
         });
@@ -175,27 +182,82 @@ class _HomePageState extends State<HomePage> {
 
   void morelikethis() async {
     setState(() => isLoading = true);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await get(
       Uri.parse(
           '${AppConfig.baseUrl}/popular?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=3'),
     );
-
-    // print(response.statusCode);
     if (response.statusCode == 200) {
-      // loader true
+      setState(() => isLoading = true);
       var decoded = jsonDecode(response.body);
       if (decoded["results"] is List) {
         decoded["results"].forEach((item) {
-          // print(item["original_title"]);
-          // print("${AppConfig.imageUrl}${item["poster_path"]}");
           if (morelikethislist.length < 10) {
             morelikethislist.add(MovieModel(
               id: item['id'],
               title: '${item["original_title"]}',
               poster: "${AppConfig.imageUrl}${item["poster_path"]}",
               banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
-              rating: "${item["vote_average"]}",
+              score: "${item["vote_average"]}",
+              releaseDate: "${item["release_date"]}",
+              description: "${item["overview"]}",
+            ));
+          }
+        });
+      }
+      setState(() => isLoading = false);
+    }
+    setState(() => isLoading = false);
+  }
+
+  void toprated() async {
+    setState(() => isLoading = true);
+    var response = await get(
+      Uri.parse(
+          '${AppConfig.baseUrl}/top_rated?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=1'),
+    );
+    if (response.statusCode == 200) {
+      setState(() => isLoading = true);
+      var decoded = jsonDecode(response.body);
+      if (decoded["results"] is List) {
+        decoded["results"].forEach((item) {
+          if (topratedlist.length < 10) {
+            topratedlist.add(MovieModel(
+              id: item['id'],
+              title: '${item["original_title"]}',
+              poster: "${AppConfig.imageUrl}${item["poster_path"]}",
+              banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
+              score: "${item["vote_average"]}",
+              releaseDate: "${item["release_date"]}",
+              description: "${item["overview"]}",
+            ));
+          }
+        });
+      }
+      setState(() => isLoading = false);
+    }
+    setState(() => isLoading = false);
+  }
+
+  void nowplaying() async {
+    setState(() => isLoading = true);
+    var response = await get(
+      Uri.parse(
+          '${AppConfig.baseUrl}/now_playing?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=4'),
+    );
+    if (response.statusCode == 200) {
+      setState(() => isLoading = true);
+      var decoded = jsonDecode(response.body);
+      if (decoded["results"] is List) {
+        decoded["results"].forEach((item) {
+          if (nowplayinglist.length < 10) {
+            nowplayinglist.add(MovieModel(
+              id: item['id'],
+              title: '${item["original_title"]}',
+              poster: "${AppConfig.imageUrl}${item["poster_path"]}",
+              banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
+              score: "${item["vote_average"]}",
+              releaseDate: "${item["release_date"]}",
+              description: "${item["overview"]}",
             ));
           }
         });

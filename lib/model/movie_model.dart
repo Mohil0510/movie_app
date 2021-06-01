@@ -1,29 +1,27 @@
 class MovieModel {
   final int id;
   final String title;
-  final String year;
-  final String length;
-  final String rating;
-  final String type;
+  final String releaseDate;
+  final String time;
+  final String score;
+  final String catergory;
   final String language;
   final String poster;
   final String banner;
-  final String plot;
+  final String description;
   final String movie;
-  final List cast;
 
-  MovieModel( {
-    this.banner,
+  MovieModel({
     this.id,
     this.title,
-    this.year,
-    this.length,
-    this.rating,
-    this.type,
+    this.releaseDate,
+    this.time,
+    this.score,
+    this.catergory,
     this.language,
     this.poster,
-    this.plot,
+    this.banner,
+    this.description,
     this.movie,
-    this.cast,
   });
 }
