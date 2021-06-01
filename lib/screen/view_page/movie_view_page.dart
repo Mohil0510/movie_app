@@ -7,6 +7,8 @@ import 'package:http/http.dart';
 import 'package:movie_app/config.dart';
 import 'package:movie_app/model/movie_model.dart';
 import 'package:movie_app/theme_data.dart';
+import 'package:movie_app/widget/common_widget.dart';
+import 'package:readmore/readmore.dart';
 
 class MovieViewPage extends StatefulWidget {
   final MovieModel view;
@@ -85,142 +87,239 @@ class _MovieViewPageState extends State<MovieViewPage> {
                           ),
                     Padding(
                       padding: const EdgeInsets.all(15),
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 140,
-                            width: 95,
-                            decoration: BoxDecoration(
-                              color: secondaryColor,
-                              borderRadius: BorderRadius.circular(7),
-                            ),
-                            child: CachedNetworkImage(
-                              imageUrl: "${widget.view.poster}",
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Container(
+                          Row(
+                            children: [
+                              Container(
                                 height: 140,
-                                child: Center(
-                                  child: Image.asset(
-                                    "assets/video/loding.gif",
-                                    height: 50,
-                                    color: primaryColor,
+                                width: 95,
+                                decoration: BoxDecoration(
+                                  color: secondaryColor,
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl: "${widget.view.poster}",
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => Container(
+                                    height: 140,
+                                    child: Center(
+                                      child: Image.asset(
+                                        "assets/video/loding.gif",
+                                        height: 50,
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: SizedBox(
+                                  height: 140,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${widget.view.title}',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: primaryColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Catergory: ',
+                                          style: TextStyle(
+                                            color: primaryTextColor,
+                                            fontSize: 13,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: ' ${widget.view.catergory}',
+                                              style: TextStyle(
+                                                color: secondaryTextColor,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Release Date:  ',
+                                          style: TextStyle(
+                                            color: primaryTextColor,
+                                            fontSize: 13,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text:
+                                                  '${widget.view.releaseDate}',
+                                              style: TextStyle(
+                                                color: secondaryTextColor,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Score: ',
+                                          style: TextStyle(
+                                            color: primaryTextColor,
+                                            fontSize: 13,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: ' ${widget.view.score}',
+                                              style: TextStyle(
+                                                color: secondaryTextColor,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              height: 40,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: primaryColor,
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(25),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image(
+                                                    image: AssetImage(
+                                                      'assets/icons/share.png',
+                                                    ),
+                                                    color: primaryTextColor,
+                                                    height: 15,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Text(
+                                                    'Share',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: primaryTextColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              height: 40,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: primaryColor,
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(25),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image(
+                                                    image: AssetImage(
+                                                      'assets/icons/watchlist.png',
+                                                    ),
+                                                    color: primaryTextColor,
+                                                    height: 15,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 7,
+                                                  ),
+                                                  Text(
+                                                    'Watchlist',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: primaryTextColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Text(
+                            'Description: ',
+                            style: TextStyle(
+                              color: primaryTextColor,
+                              fontSize: 13,
                             ),
                           ),
                           SizedBox(
-                            width: 10,
+                            height: 7,
                           ),
-                          Expanded(
-                            child: SizedBox(
-                              height: 140,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${widget.view.title}',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Catergory: ',
-                                      style: TextStyle(
-                                        color: primaryTextColor,
-                                        fontSize: 13,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: ' ${widget.view.catergory}',
-                                          style: TextStyle(
-                                            color: secondaryTextColor,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Release Date:  ',
-                                      style: TextStyle(
-                                        color: primaryTextColor,
-                                        fontSize: 13,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: '${widget.view.releaseDate}',
-                                          style: TextStyle(
-                                            color: secondaryTextColor,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Score: ',
-                                      style: TextStyle(
-                                        color: primaryTextColor,
-                                        fontSize: 13,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: ' ${widget.view.score}',
-                                          style: TextStyle(
-                                            color: secondaryTextColor,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  RichText(
-                                    overflow: TextOverflow.clip,
-                                    text: TextSpan(
-                                      text: 'Description: ',
-                                      style: TextStyle(
-                                        color: primaryTextColor,
-                                        fontSize: 13,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: '${widget.view.description}',
-                                          style: TextStyle(
-                                            color: secondaryTextColor,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          ReadMoreText(
+                            '${widget.view.description}',
+                            trimLines: 2,
+                            style: TextStyle(
+                              color: secondaryTextColor,
+                              fontSize: 12,
+                            ),
+                            colorClickableText: Colors.pink,
+                            trimMode: TrimMode.Line,
+                            trimCollapsedText: 'Show more',
+                            trimExpandedText: 'Show less',
+                            moreStyle: TextStyle(
+                              color: primaryTextColor,
+                              fontSize: 12,
                             ),
                           ),
                         ],
                       ),
                     ),
+                    CommonWidget.category(categoryname: 'May you like'),
                   ],
                 ),
               ),
