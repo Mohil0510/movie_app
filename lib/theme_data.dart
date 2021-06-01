@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 
 //   static ThemeMode themeMode = ThemeMode.dark;
 
-
 // class CustomTheme {
 //   static ThemeData get lightTheme {
 //     Color secondaryColor = Color(0xff212121);
@@ -29,7 +28,7 @@ import 'package:flutter/material.dart';
 
 //       scaffoldBackgroundColor: Color(0Xff141414),
 //       textTheme: TextTheme(
-        
+
 //       ),
 //     );
 //   }
@@ -79,7 +78,6 @@ const TextStyle boldText2 = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-
 const TextStyle text1 = TextStyle(
   color: secondaryTextColor,
   fontSize: 16,
@@ -88,4 +86,9 @@ const TextStyle text1 = TextStyle(
 const TextStyle text2 = TextStyle(
   color: secondaryTextColor,
   fontSize: 15,
+);
+
+const TextStyle text3 = TextStyle(
+  color: primaryTextColor,
+  fontSize: 18,
 );
