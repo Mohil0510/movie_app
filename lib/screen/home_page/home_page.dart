@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
           '${AppConfig.baseUrl}/upcoming?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=1'),
     );
     if (response.statusCode == 200) {
-      // loader true
+      setState(() => isLoading = true);
       var decoded = jsonDecode(response.body);
       if (decoded["results"] is List) {
         decoded["results"].forEach((item) {

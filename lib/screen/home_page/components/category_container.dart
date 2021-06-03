@@ -47,6 +47,11 @@ class _CategoryContainerState extends State<CategoryContainer> {
                       offset: Offset(4, 4),
                     ),
                   ],
+                  // image: DecorationImage(
+                  //   image: CachedNetworkImageProvider(
+                  //       "${widget.movieData.poster}"),
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
                 child: CachedNetworkImage(
                   imageUrl: "${widget.movieData.poster}",
@@ -61,6 +66,28 @@ class _CategoryContainerState extends State<CategoryContainer> {
                       ),
                     ),
                   ),
+                  // imageBuilder: (context, imageProvider) => Container(
+                  //   height: 160,
+                  //   width: 120,
+                  //   decoration: BoxDecoration(
+                  //     color: secondaryColor,
+                  //     borderRadius: BorderRadius.all(
+                  //       Radius.circular(8),
+                  //     ),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: Colors.black87,
+                  //         blurRadius: 8,
+                  //         spreadRadius: 3,
+                  //         offset: Offset(4, 4),
+                  //       ),
+                  //     ],
+                  //     image: DecorationImage(
+                  //       image: imageProvider,
+                  //       fit: BoxFit.cover,
+                  //     ),
+                  //   ),
+                  // ),
                   errorWidget: (context, url, error) => Icon(
                     Icons.error,
                     color: primaryColor,
