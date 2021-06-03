@@ -61,8 +61,8 @@ class _SearchPageState extends State<SearchPage> {
                     width: double.infinity,
                     child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.85,
+                        crossAxisCount: 3,
+                        childAspectRatio: 0.63,
                       ),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
@@ -70,7 +70,7 @@ class _SearchPageState extends State<SearchPage> {
                       itemBuilder: (context, index) => CategoryContainer(
                         movieData: searchList[index],
                       ),
-                    ),
+                    ), 
                   ),
                 ],
               ),
