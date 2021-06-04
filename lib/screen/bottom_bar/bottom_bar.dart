@@ -1,12 +1,11 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:movie_app/screen/downlode_page/downlode_page.dart';
-import 'package:movie_app/screen/home_page/home_page.dart';
-import 'package:movie_app/screen/profile_page/profile_page.dart';
-import 'package:movie_app/screen/search_page/search_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:movie_app/theme_data.dart';
+import 'package:movie_app/screen/home_page/home_page.dart';
+import 'package:movie_app/screen/search_page/search_page.dart';
+import 'package:movie_app/screen/profile_page/profile_page.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:movie_app/screen/downlode_page/downlode_page.dart';
 
 class BottomBarPage extends StatefulWidget {
   @override

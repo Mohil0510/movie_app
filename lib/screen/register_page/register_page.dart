@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:movie_app/screen/bottom_bar/bottom_bar.dart';
@@ -102,4 +103,5 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+
 }

@@ -21,13 +21,13 @@ class MovieViewPage extends StatefulWidget {
 }
 
 class _MovieViewPageState extends State<MovieViewPage> {
-  List<MovieModel> topwatchelist = [];
+  List<MovieModel> similarlist = [];
   bool isLoading = false;
   @override
   void initState() {
     super.initState();
     movieView(widget.view.id);
-    topWatche();
+    similar(widget.view.id);
   }
 
   @override
@@ -316,12 +316,12 @@ class _MovieViewPageState extends State<MovieViewPage> {
                       child: Row(
                         children: [
                           CategoryContainer(
-                            movieData: topwatchelist[index],
+                            movieData: similarlist[index],
                           ),
                         ],
                       ),
                     ),
-                    itemCount: topwatchelist.length,
+                    itemCount: similarlist.length,
                   ),
                 ),
               ],
@@ -355,28 +355,26 @@ class _MovieViewPageState extends State<MovieViewPage> {
     setState(() => isLoading = false);
   }
 
-  void topWatche() async {
+  void similar(int movieId) async {
     setState(() => isLoading = true);
     var response = await get(
       Uri.parse(
-          '${AppConfig.baseUrl}/upcoming?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=4'),
+          '${AppConfig.baseUrl}/$movieId/similar?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=1'),
     );
     if (response.statusCode == 200) {
       setState(() => isLoading = true);
       var decoded = jsonDecode(response.body);
       if (decoded["results"] is List) {
         decoded["results"].forEach((item) {
-          if (topwatchelist.length < 15) {
-            topwatchelist.add(MovieModel(
-              id: item['id'],
-              title: '${item["original_title"]}',
-              poster: "${AppConfig.imageUrl}${item["poster_path"]}",
-              banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
-              score: "${item["vote_average"]}",
-              releaseDate: "${item["release_date"]}",
-              description: "${item["overview"]}",
-            ));
-          }
+          similarlist.add(MovieModel(
+            id: item['id'],
+            title: '${item["original_title"]}',
+            poster: "${AppConfig.imageUrl}${item["poster_path"]}",
+            banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
+            score: "${item["vote_average"]}",
+            releaseDate: "${item["release_date"]}",
+            description: "${item["overview"]}",
+          ));
         });
       }
       setState(() => isLoading = false);

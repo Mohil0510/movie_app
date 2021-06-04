@@ -21,19 +21,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<MovieModel> topwatchelist = [];
-  List<MovieModel> morelikethislist = [];
+  List<MovieModel> upcominglist = [];
+  List<MovieModel> recommendationslist = [];
+  List<MovieModel> trendinglist = [];
   List<MovieModel> topratedlist = [];
-  List<MovieModel> nowplayinglist = [];
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    topWatche();
-    morelikethis();
+    upcoming();
+    recommendations();
+    trending();
     toprated();
-    nowplaying();
   }
 
   @override
@@ -64,14 +64,14 @@ class _HomePageState extends State<HomePage> {
                         autoPlayInterval: Duration(seconds: 8),
                         enableInfiniteScroll: false,
                       ),
-                      items: topwatchelist.map((MovieModel movie) {
+                      items: upcominglist.map((MovieModel movie) {
                         return HomeSlider(
                           sliders: movie,
                         );
                       }).toList(),
                     ),
                     CommonWidget.category(
-                      categoryname: 'Now Playings',
+                      categoryname: 'Recommendations movie',
                     ),
                     Container(
                       height: 190,
@@ -82,15 +82,15 @@ class _HomePageState extends State<HomePage> {
                           child: Row(
                             children: [
                               CategoryContainer(
-                                movieData: nowplayinglist[index],
+                                movieData: recommendationslist[index],
                               ),
                             ],
                           ),
                         ),
-                        itemCount: nowplayinglist.length,
+                        itemCount: recommendationslist.length,
                       ),
                     ),
-                    CommonWidget.category(categoryname: 'More like this'),
+                    CommonWidget.category(categoryname: 'Trending movie'),
                     Container(
                       height: 190,
                       child: ListView.builder(
@@ -100,15 +100,15 @@ class _HomePageState extends State<HomePage> {
                           child: Row(
                             children: [
                               CategoryContainer(
-                                movieData: morelikethislist[index],
+                                movieData: trendinglist[index],
                               ),
                             ],
                           ),
                         ),
-                        itemCount: morelikethislist.length,
+                        itemCount: trendinglist.length,
                       ),
                     ),
-                    CommonWidget.category(categoryname: 'Best all time'),
+                    CommonWidget.category(categoryname: 'Top Rated Movie'),
                     Container(
                       height: 190,
                       child: ListView.builder(
@@ -126,24 +126,6 @@ class _HomePageState extends State<HomePage> {
                         itemCount: topratedlist.length,
                       ),
                     ),
-                    CommonWidget.category(categoryname: 'Top action'),
-                    Container(
-                      height: 190,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              CategoryContainer(
-                                movieData: topwatchelist[index],
-                              ),
-                            ],
-                          ),
-                        ),
-                        itemCount: topwatchelist.length,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -151,27 +133,30 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void topWatche() async {
+  void upcoming() async {
     setState(() => isLoading = true);
     var response = await get(
       Uri.parse(
           '${AppConfig.baseUrl}/upcoming?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=1'),
     );
+    print(response.statusCode);
     if (response.statusCode == 200) {
       setState(() => isLoading = true);
       var decoded = jsonDecode(response.body);
       if (decoded["results"] is List) {
         decoded["results"].forEach((item) {
-          if (topwatchelist.length < 10) {
-            topwatchelist.add(MovieModel(
-              id: item['id'],
-              title: '${item["original_title"]}',
-              poster: "${AppConfig.imageUrl}${item["poster_path"]}",
-              banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
-              score: "${item["vote_average"]}",
-              releaseDate: "${item["release_date"]}",
-              description: "${item["overview"]}",
-            ));
+          if (upcominglist.length < 10) {
+            if (MovieModel != null) {
+              upcominglist.add(MovieModel(
+                id: item['id'],
+                title: '${item["original_title"]}',
+                poster: "${AppConfig.imageUrl}${item["poster_path"]}",
+                banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
+                score: "${item["vote_average"]}",
+                releaseDate: "${item["release_date"]}",
+                description: "${item["overview"]}",
+              ));
+            }
           }
         });
       }
@@ -180,27 +165,62 @@ class _HomePageState extends State<HomePage> {
     setState(() => isLoading = false);
   }
 
-  void morelikethis() async {
+  void recommendations() async {
     setState(() => isLoading = true);
     var response = await get(
       Uri.parse(
-          '${AppConfig.baseUrl}/popular?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=3'),
+          '${AppConfig.baseUrl}/337404/recommendations?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=1'),
     );
+    print(response.statusCode);
     if (response.statusCode == 200) {
       setState(() => isLoading = true);
       var decoded = jsonDecode(response.body);
       if (decoded["results"] is List) {
         decoded["results"].forEach((item) {
-          if (morelikethislist.length < 10) {
-            morelikethislist.add(MovieModel(
-              id: item['id'],
-              title: '${item["original_title"]}',
-              poster: "${AppConfig.imageUrl}${item["poster_path"]}",
-              banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
-              score: "${item["vote_average"]}",
-              releaseDate: "${item["release_date"]}",
-              description: "${item["overview"]}",
-            ));
+          if (recommendationslist.length < 10) {
+            if (MovieModel != null) {
+              recommendationslist.add(MovieModel(
+                id: item['id'],
+                title: '${item["original_title"]}',
+                poster: "${AppConfig.imageUrl}${item["poster_path"]}",
+                banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
+                score: "${item["vote_average"]}",
+                releaseDate: "${item["release_date"]}",
+                description: "${item["overview"]}",
+              ));
+            }
+          }
+        });
+      }
+      setState(() => isLoading = false);
+    }
+    setState(() => isLoading = false);
+  }
+
+  void trending() async {
+    setState(() => isLoading = true);
+    var response = await get(
+      Uri.parse(
+          '${AppConfig.trendingmovie}/trending/movie/day?api_key=62d1dd5722f913d8e325724485323bdd'),
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      setState(() => isLoading = true);
+      var decoded = jsonDecode(response.body);
+      if (decoded["results"] is List) {
+        decoded["results"].forEach((item) {
+          if (trendinglist.length < 10) {
+            if (MovieModel != null) {
+              trendinglist.add(MovieModel(
+                id: item['id'],
+                title: '${item["original_title"]}',
+                poster: "${AppConfig.imageUrl}${item["poster_path"]}",
+                banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
+                score: "${item["vote_average"]}",
+                releaseDate: "${item["release_date"]}",
+                description: "${item["overview"]}",
+              ));
+            }
           }
         });
       }
@@ -213,52 +233,26 @@ class _HomePageState extends State<HomePage> {
     setState(() => isLoading = true);
     var response = await get(
       Uri.parse(
-          '${AppConfig.baseUrl}/top_rated?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=1'),
+          '${AppConfig.baseUrl}/top_rated?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=2'),
     );
+    print(response.statusCode);
     if (response.statusCode == 200) {
       setState(() => isLoading = true);
       var decoded = jsonDecode(response.body);
       if (decoded["results"] is List) {
         decoded["results"].forEach((item) {
           if (topratedlist.length < 10) {
-            topratedlist.add(MovieModel(
-              id: item['id'],
-              title: '${item["original_title"]}',
-              poster: "${AppConfig.imageUrl}${item["poster_path"]}",
-              banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
-              score: "${item["vote_average"]}",
-              releaseDate: "${item["release_date"]}",
-              description: "${item["overview"]}",
-            ));
-          }
-        });
-      }
-      setState(() => isLoading = false);
-    }
-    setState(() => isLoading = false);
-  }
-
-  void nowplaying() async {
-    setState(() => isLoading = true);
-    var response = await get(
-      Uri.parse(
-          '${AppConfig.baseUrl}/now_playing?api_key=62d1dd5722f913d8e325724485323bdd&language=en-US&page=4'),
-    );
-    if (response.statusCode == 200) {
-      setState(() => isLoading = true);
-      var decoded = jsonDecode(response.body);
-      if (decoded["results"] is List) {
-        decoded["results"].forEach((item) {
-          if (nowplayinglist.length < 10) {
-            nowplayinglist.add(MovieModel(
-              id: item['id'],
-              title: '${item["original_title"]}',
-              poster: "${AppConfig.imageUrl}${item["poster_path"]}",
-              banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
-              score: "${item["vote_average"]}",
-              releaseDate: "${item["release_date"]}",
-              description: "${item["overview"]}",
-            ));
+            if (MovieModel != null) {
+              topratedlist.add(MovieModel(
+                id: item['id'],
+                title: '${item["original_title"]}',
+                poster: "${AppConfig.imageUrl}${item["poster_path"]}",
+                banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
+                score: "${item["vote_average"]}",
+                releaseDate: "${item["release_date"]}",
+                description: "${item["overview"]}",
+              ));
+            }
           }
         });
       }

@@ -15,7 +15,9 @@ dependencies:
   http: 
   dio: ^4.0.0
   device_info:
+  fluttertoast:
   readmore: ^2.0.0
+  image_picker: 0.7.5
   carousel_slider: ^3.0.0
   shared_preferences: ^2.0.0
   syncfusion_flutter_datagrid: 
