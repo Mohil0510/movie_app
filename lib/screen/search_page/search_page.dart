@@ -22,42 +22,42 @@ class _SearchPageState extends State<SearchPage> {
       backgroundColor: scaffoldBackgroundColor,
       body: Container(
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: greyContainerDecoration,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          cursorColor: primaryColor,
-                          style: text2,
-                          onChanged: (value) => _query = value,
-                          onEditingComplete: () => callApi(),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Searche movie....',
-                            hintStyle: text2,
-                            icon: Icon(
-                              Icons.search,
-                              color: secondaryTextColor,
-                            ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: greyContainerDecoration,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFormField(
+                        cursorColor: primaryColor,
+                        style: text2,
+                        onChanged: (value) => _query = value,
+                        onEditingComplete: () => callApi(),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Searche movie....',
+                          hintStyle: text2,
+                          icon: Icon(
+                            Icons.search,
+                            color: secondaryTextColor,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 550,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: Container(
+                    // height: 550,
                     width: double.infinity,
                     child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,15 +65,14 @@ class _SearchPageState extends State<SearchPage> {
                         childAspectRatio: 0.63,
                       ),
                       scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
                       itemCount: searchList.length,
                       itemBuilder: (context, index) => CategoryContainer(
                         movieData: searchList[index],
                       ),
-                    ), 
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

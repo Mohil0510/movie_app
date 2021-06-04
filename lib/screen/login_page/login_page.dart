@@ -17,12 +17,12 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: scaffoldBackgroundColor,
       resizeToAvoidBottomInset: false,
       body: Container(
+        
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/Login Bg.jpg'),
-            
             fit: BoxFit.cover,
           ),
         ),
