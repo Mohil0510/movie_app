@@ -83,6 +83,7 @@ class _SearchPageState extends State<SearchPage> {
   void callApi() async {
     var response = await get(
       Uri.parse('${AppConfig.searchUrl}&query=$_query&include_adult=false'),
+      
     );
     // print(response.statusCode);
     if (response.statusCode == 200) {

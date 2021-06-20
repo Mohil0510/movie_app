@@ -23,11 +23,13 @@ class MovieViewPage extends StatefulWidget {
 class _MovieViewPageState extends State<MovieViewPage> {
   List<MovieModel> similarlist = [];
   bool isLoading = false;
+  bool favorite = false;
   @override
   void initState() {
     super.initState();
     movieView(widget.view.id);
     similar(widget.view.id);
+    markAsFavorite(widget.view.id);
   }
 
   @override
@@ -40,18 +42,23 @@ class _MovieViewPageState extends State<MovieViewPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios_outlined,
-                    color: primaryTextColor,
-                    size: 18,
-                  ),
-                  label: Text(
-                    '${widget.view.title}',
-                    style: boldText1,
+                Container(
+                  width: double.infinity,
+                  alignment: Alignment.topLeft,
+                  child: TextButton.icon(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios_outlined,
+                      color: primaryTextColor,
+                      size: 18,
+                    ),
+                    label: Text(
+                      '${widget.view.title}',
+                      overflow: TextOverflow.ellipsis,
+                      style: boldText1,
+                    ),
                   ),
                 ),
                 isLoading
@@ -194,37 +201,44 @@ class _MovieViewPageState extends State<MovieViewPage> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: Container(
-                                          height: 40,
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: primaryColor,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(25),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(
+                                              () => favorite = !favorite,
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 40,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: primaryColor,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(25),
+                                              ),
                                             ),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image(
-                                                image: AssetImage(
-                                                  'assets/icons/share.png',
-                                                ),
-                                                color: primaryTextColor,
-                                                height: 15,
-                                              ),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text(
-                                                'Share',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image(
+                                                  image: AssetImage(
+                                                    'assets/icons/heart.png',
+                                                  ),
                                                   color: primaryTextColor,
+                                                  height: 15,
                                                 ),
-                                              ),
-                                            ],
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  'Favorite',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: primaryTextColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -368,7 +382,7 @@ class _MovieViewPageState extends State<MovieViewPage> {
         decoded["results"].forEach((item) {
           similarlist.add(MovieModel(
             id: item['id'],
-            title: '${item["original_title"]}',
+            title: '${item["title"]}',
             poster: "${AppConfig.imageUrl}${item["poster_path"]}",
             banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
             score: "${item["vote_average"]}",
@@ -379,6 +393,23 @@ class _MovieViewPageState extends State<MovieViewPage> {
       }
       setState(() => isLoading = false);
     }
+    setState(() => isLoading = false);
+  }
+
+  void markAsFavorite(int movieId) async {
+    setState(() => isLoading = true);
+    var response = await post(
+      Uri.parse(
+          'https://api.themoviedb.org/3/account/10556530/favorite?api_key=62d1dd5722f913d8e325724485323bdd&session_id=866fc92d3b9c62eee0cf7aee128c4a9c4add257d'),
+      body: {
+        "media_type": "movie",
+        "media_id": "$movieId",
+        "favorite": "$favorite",
+      },
+    );
+    print("response ${response.statusCode}");
+    print("favorite $favorite");
+
     setState(() => isLoading = false);
   }
 }

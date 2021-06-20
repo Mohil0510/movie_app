@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
             if (MovieModel != null) {
               upcominglist.add(MovieModel(
                 id: item['id'],
-                title: '${item["original_title"]}',
+                title: '${item["title"]}',
                 poster: "${AppConfig.imageUrl}${item["poster_path"]}",
                 banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
                 score: "${item["vote_average"]}",
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
             if (MovieModel != null) {
               recommendationslist.add(MovieModel(
                 id: item['id'],
-                title: '${item["original_title"]}',
+                title: '${item["title"]}',
                 poster: "${AppConfig.imageUrl}${item["poster_path"]}",
                 banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
                 score: "${item["vote_average"]}",
@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
             if (MovieModel != null) {
               trendinglist.add(MovieModel(
                 id: item['id'],
-                title: '${item["original_title"]}',
+                title: '${item["title"]}',
                 poster: "${AppConfig.imageUrl}${item["poster_path"]}",
                 banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
                 score: "${item["vote_average"]}",
@@ -245,7 +245,7 @@ class _HomePageState extends State<HomePage> {
             if (MovieModel != null) {
               topratedlist.add(MovieModel(
                 id: item['id'],
-                title: '${item["original_title"]}',
+                title: '${item["title"]}',
                 poster: "${AppConfig.imageUrl}${item["poster_path"]}",
                 banner: "${AppConfig.imageUrl}${item["backdrop_path"]}",
                 score: "${item["vote_average"]}",
